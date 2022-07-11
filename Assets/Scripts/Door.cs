@@ -4,8 +4,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    
-    private float _doorCloseDelay = 3f;
+    [SerializeField] private float _doorCloseDelay = 2f;
 
     public void Open()
     {

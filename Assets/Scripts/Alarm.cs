@@ -3,10 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class Alarm : MonoBehaviour
 {
+    [SerializeField] private float _maxDeltaVolume = 0.01f;
+    [SerializeField] private bool _playerInHouse = false;
+
     private AudioSource _audioSource;    
-    private float _targetVolume = 1f;
-    private float _maxDeltaVolume = 0.001f;
-    private bool _playerInHouse = false;
+    private float _targetVolume = 1f;        
 
     private void Awake()
     {
@@ -19,7 +20,7 @@ public class Alarm : MonoBehaviour
         _audioSource.Play();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         VolumeChange();
     }
@@ -28,7 +29,7 @@ public class Alarm : MonoBehaviour
     {
         if (other.GetComponent<Player>())
         {
-            _playerInHouse = true;            
+            _playerInHouse = true;
         }
     }    
 

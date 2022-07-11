@@ -5,16 +5,17 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Player : MonoBehaviour{
     
+    [SerializeField] private float _doorOpenDelay = 0.2f;
+
     private NavMeshAgent _myAgent;
-    private bool _hasControl = true;
-    private float _doorOpenDelay = 0.5f;
+    private bool _hasControl = true;    
     
     private void Awake()
     {
         _myAgent = GetComponent<NavMeshAgent>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     { 
         if(Input.GetMouseButtonDown(0) && _hasControl)
         {
