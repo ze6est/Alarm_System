@@ -1,18 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Animator _animator;
+    
+    private float _doorCloseDelay = 3f;
+
+    public void Open()
     {
-        
+        _animator.ResetTrigger("close");
+        _animator.SetTrigger("open");
+        StartCoroutine(CloseDoorCoroutine());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator CloseDoorCoroutine()
     {
-        
+        yield return new WaitForSeconds(_doorCloseDelay);
+        _animator.ResetTrigger("open");
+        _animator.SetTrigger("close");
     }
 }
