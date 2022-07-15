@@ -7,7 +7,8 @@ public class Alarm : MonoBehaviour
     [SerializeField] private float _maxDeltaVolume = 0.001f;    
 
     private AudioSource _audioSource;    
-    private float _targetVolume = 1.0f;        
+    private float _targetVolume = 1.0f;
+    private IEnumerator _currentCoroutine;
 
     private void Awake()
     {
@@ -24,8 +25,13 @@ public class Alarm : MonoBehaviour
     {
         if(other.GetComponent<Player>())
         {
-            StopCoroutine(TurnDownVolume());
-            StartCoroutine(IncreaseVolume());
+            if(_currentCoroutine != null)
+            {
+                StopCoroutine(_currentCoroutine);
+            }
+
+            _currentCoroutine = IncreaseVolume();
+            StartCoroutine(_currentCoroutine);
         }        
     }    
 
@@ -33,8 +39,13 @@ public class Alarm : MonoBehaviour
     {
         if (other.GetComponent<Player>())
         {
-            StopCoroutine(IncreaseVolume());
-            StartCoroutine(TurnDownVolume());
+            if (_currentCoroutine != null)
+            {
+                StopCoroutine(_currentCoroutine);
+            }
+
+            _currentCoroutine = TurnDownVolume();
+            StartCoroutine(_currentCoroutine);
         }
     }
 
