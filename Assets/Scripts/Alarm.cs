@@ -1,13 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class Alarm : MonoBehaviour
 {
-    [SerializeField] private float _maxDeltaVolume = 0.01f;
-    [SerializeField] private bool _playerInHouse = false;
+    [SerializeField] private float _maxDeltaVolume = 0.001f;    
 
     private AudioSource _audioSource;    
-    private float _targetVolume = 1f;        
+    private float _targetVolume = 1.0f;        
 
     private void Awake()
     {
@@ -18,38 +18,41 @@ public class Alarm : MonoBehaviour
     private void Start()
     {
         _audioSource.Play();
-    }
-
-    private void FixedUpdate()
-    {
-        VolumeChange();
-    }
+    }    
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if(other.GetComponent<Player>())
         {
-            _playerInHouse = true;
-        }
+            StopCoroutine(TurnDownVolume());
+            StartCoroutine(IncreaseVolume());
+        }        
     }    
 
     private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<Player>())
         {
-            _playerInHouse = false;            
+            StopCoroutine(IncreaseVolume());
+            StartCoroutine(TurnDownVolume());
         }
-    }    
+    }
 
-    private void VolumeChange()
+    private IEnumerator IncreaseVolume()
     {
-        if(_playerInHouse)
+        while(_audioSource.volume < _targetVolume)
         {
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, _maxDeltaVolume);
-        }
-        else
+            yield return null;
+        }        
+    }
+
+    private IEnumerator TurnDownVolume()
+    {
+        while(_audioSource.volume > 0)
         {
             _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, -_maxDeltaVolume);
-        }
+            yield return null;
+        }              
     }
 }

@@ -42,11 +42,13 @@ public class Player : MonoBehaviour{
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Door>())
+        Door door = other.GetComponent<Door>();
+
+        if (door)
         {
             _hasControl = false;
             _myAgent.isStopped = true;
-            other.GetComponent<Door>().Open();
+            door.Open();
             StartCoroutine(DelayCoroutine());
         }
     }
