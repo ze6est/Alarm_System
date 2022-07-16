@@ -25,21 +25,21 @@ public class Alarm : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if (other.TryGetComponent<Player>(out Player player))
         {
-            TurnOnCoroutine(IncreaseVolume());
+            TurnOnCoroutine(TurnUpVolume());
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<Player>())
+        if (other.TryGetComponent<Player>(out Player player))
         {
             TurnOnCoroutine(TurnDownVolume());
         }
     }
 
-    private IEnumerator IncreaseVolume()
+    private IEnumerator TurnUpVolume()
     {
         while (_audioSource.volume < _targetVolume)
         {
