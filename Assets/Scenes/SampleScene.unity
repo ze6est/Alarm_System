@@ -1211,6 +1211,7 @@ GameObject:
   - component: {fileID: 1309280107}
   - component: {fileID: 1309280109}
   - component: {fileID: 1309280108}
+  - component: {fileID: 1309280110}
   m_Layer: 0
   m_Name: Alarm Detector
   m_TagString: Untagged
@@ -1225,7 +1226,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1309280105}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 10, y: 3, z: 10}
   m_Children: []
@@ -1240,7 +1241,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1309280105}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1.323441, z: 1}
@@ -1258,6 +1259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxDeltaVolume: 0.001
+  _audioSource: {fileID: 1309280109}
 --- !u!82 &1309280109
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1269,10 +1271,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 402a1f27d57661a49bd4866004beae0a, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1354,6 +1356,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1309280110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309280105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65e0c2e72dbd4f745bd6286117ae54a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerEnteredHouse:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1309280108}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _playerCameOutHouse:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1419641771
 GameObject:
   m_ObjectHideFlags: 0
