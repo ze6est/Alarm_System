@@ -1,25 +1,24 @@
-using System.Collections;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class Door : MonoBehaviour
-{
-    [SerializeField] private Animator _animator;
-    [SerializeField] private float _doorCloseDelay = 2f;
+{    
+    [SerializeField] private UnityEvent _playerEnteredHouse;
+    [SerializeField] private UnityEvent _playerCameOutHouse;    
 
-    private int _openHash = Animator.StringToHash("open");
-    private int _closeHash = Animator.StringToHash("close");
-
-    public void Open()
-    {        
-        _animator.ResetTrigger(_closeHash);
-        _animator.SetTrigger(_openHash);
-        StartCoroutine(CloseDoorCoroutine());
-    }
-
-    private IEnumerator CloseDoorCoroutine()
+    private void OnTriggerEnter(Collider other)
     {
-        yield return new WaitForSeconds(_doorCloseDelay);
-        _animator.ResetTrigger(_openHash);
-        _animator.SetTrigger(_closeHash);
+        if (other.TryGetComponent<Player>(out Player player))
+        {
+            _playerEnteredHouse?.Invoke();
+        }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<Player>(out Player player))
+        {
+            _playerCameOutHouse?.Invoke();
+        }
+    }    
 }

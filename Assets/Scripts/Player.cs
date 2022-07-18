@@ -42,7 +42,7 @@ public class Player : MonoBehaviour{
 
     private void OnTriggerEnter(Collider other)
     {
-        Door door = other.GetComponent<Door>();
+        DoorAnimator door = other.GetComponent<DoorAnimator>();
 
         if (door)
         {

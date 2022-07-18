@@ -14,7 +14,7 @@ public class Alarm : MonoBehaviour
 
     private void Awake()
     {        
-        _audioSource.volume = 0;
+        _audioSource.volume = _minVolume;
     }    
 
     private void Start()
