@@ -8,59 +8,52 @@ public class Alarm : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;    
 
     private float _targetVolume = 1.0f;
-    private float _minVolume = 0f;
-    private int _soundReduction = -1;
+    private float _minVolume = 0f;    
     private IEnumerator _currentCoroutine;
+    private const int _increaseVolume = 1;
+    private const int _decreaseColume = -1;
 
     private void Awake()
     {        
-        _audioSource.volume = _minVolume;
+        _audioSource.volume = _minVolume;        
     }    
 
     private void Start()
     {
         _audioSource.Play();
-    }    
-
-    public void TurnOnIncreaseVolume()
-    {
-        AssignCurrentCoroutine(IncreaseVolume());
     }
 
-    public void TurnOnDecreaseVolume()
-    {
-        AssignCurrentCoroutine(DecreaseVolume());
-    }
-
-    private void AssignCurrentCoroutine(IEnumerator volumeChangerCoroutine)
+    public void RunCoroutineChangeVolume(bool enteredPlayer)
     {
         if (_currentCoroutine != null)
             StopCoroutine(_currentCoroutine);
 
-        _currentCoroutine = volumeChangerCoroutine;
+        _currentCoroutine = RunChangeVolume(enteredPlayer);
         StartCoroutine(_currentCoroutine);
     }
 
-    private IEnumerator IncreaseVolume()
-    {
-        while (_audioSource.volume < _targetVolume)
-        {
-            ChangeVolume();
-            yield return null;
-        }
-    }
-
-    private IEnumerator DecreaseVolume()
-    {
-        while (_audioSource.volume > _minVolume)
-        {
-            ChangeVolume(_soundReduction);
-            yield return null;
-        }
-    }
-
-    private void ChangeVolume(int changeDirection = 1)
+    private void ChangeVolume(int changeDirection = _increaseVolume)
     {
         _audioSource.volume = Mathf.MoveTowards(_audioSource.volume, _targetVolume, _maxDeltaVolume * changeDirection);
+    }    
+
+    private IEnumerator RunChangeVolume(bool enteredPlayer)
+    {
+        if(enteredPlayer)
+        {
+            while (_audioSource.volume < _targetVolume)
+            {
+                ChangeVolume();
+                yield return null;
+            }
+        }
+        else
+        {
+            while (_audioSource.volume > _minVolume)
+            {
+                ChangeVolume(_decreaseColume);
+                yield return null;
+            }
+        }
     }
 }

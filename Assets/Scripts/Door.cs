@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {    
-    [SerializeField] private UnityEvent _playerEnteredHouse;
-    [SerializeField] private UnityEvent _playerCameOutHouse;    
+    [SerializeField] private UnityEvent _enteredPlayer;
+    [SerializeField] private UnityEvent _cameOutPlayer;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Player>(out Player player))
-        {
-            _playerEnteredHouse?.Invoke();
+        {            
+            _enteredPlayer?.Invoke();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent<Player>(out Player player))
-        {
-            _playerCameOutHouse?.Invoke();
+        {            
+            _cameOutPlayer?.Invoke();
         }
     }    
 }
